@@ -24,8 +24,10 @@ echo "Starting thriftserver..."
 
 /spark/bin/spark-submit --class org.apache.spark.sql.hive.thriftserver.HiveThriftServer2 \
 	--name "Thrift JDBC/ODBC Server" \
-	--master "spark://$SPARK_MASTER:7077" \
+	--master "spark://$SPARK_MASTER" \
 	--deploy-mode client \
-	--total-executor-cores 1 \
+	--total-executor-cores $TOTAL_EXECUTOR_CORES \
+	--executor-memory $EXECUTOR_MEMORY \
+	--conf spark.driver.maxResultSize=$DRIVER_MAX_RESULT_SIZE \
 	--hiveconf hive.server2.thrift.port=10000 \
 	--hiveconf hive.server2.thrift.bind.host=0.0.0.0
